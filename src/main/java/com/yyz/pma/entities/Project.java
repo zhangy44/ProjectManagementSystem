@@ -1,11 +1,20 @@
 package com.yyz.pma.entities;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
+@Entity
 public class Project {
 	
+	@Override
+	public String toString() {
+		return "Project [projectId=" + projectId + ", name=" + name + ", stage=" + stage + ", description="
+				+ description + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long projectId;
