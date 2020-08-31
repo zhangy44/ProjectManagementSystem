@@ -28,6 +28,6 @@ public class HomeController {
 		List<Employee> employeeList = empRepo.findAll();
 		model.addAttribute("projectList",projectList);
 		model.addAttribute("employeeList", employeeList);
-		return "home";
+		return "main/home";
 	}
 }
