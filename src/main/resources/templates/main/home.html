@@ -7,6 +7,7 @@
 <body>
 
 	<nav th:replace="layouts::navbar"></nav>
+
 	<div class="container">
 		<h3>Main Dashboard</h3>
 		<hr>
@@ -21,7 +22,7 @@
 							<th scope="col">Project Stage</th>
 						</tr>
 					<thead>
-						<th scope="row"></th>
+						<!-- <th scope="row"></th> -->
 						<tr th:each="proj : ${projectList}">
 							<td th:text="${proj.name}" />
 							<td th:text="${proj.stage}" />
@@ -31,6 +32,9 @@
 			<div class="col-md-4">
 				<canvas id="myPieChart" height="50" width="50">
 			</canvas>
+				<script>
+				var chartData = "[[${projectStatusCnt}]]"
+			</script>
 			</div>
 		</div>
 
@@ -46,14 +50,14 @@
 						<tr>
 							<th scope="col">Employee First Name</th>
 							<th scope="col">Employee Last Name</th>
-							<th scope="col">Employee Email</th>
+							<th scope="col">Employee Count</th>
 						</tr>
 					<thead>
-						<th scope="row"></th>
-						<tr th:each="emp : ${employeeList}">
-							<td th:text="${emp.firstName}" />
-							<td th:text="${emp.lastName}" />
-							<td th:text="${emp.email}" />
+						<!-- <th scope="row"></th> -->
+						<tr th:each="empCount : ${employeeListCount}">
+							<td th:text="${empCount.firstName}" />
+							<td th:text="${empCount.lastName}" />
+							<td th:text="${empCount.projectCount}" />
 						</tr>
 				</table>
 			</div>

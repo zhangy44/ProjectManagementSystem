@@ -1,17 +1,41 @@
+var chartDatastr = decodeHTML(chartData);
+var chartJSONArr = JSON.parse(chartDatastr);
+
+var arrayLength = chartJSONArr.length;
+var numericData = [];
+var labelData = [];
+
+for(var i = 0 ; i < arrayLength; i++){
+	numericData[i] = chartJSONArr[i].value;
+	labelData[i] = chartJSONArr[i].label;
+}
+
 
 
 new Chart(document.getElementById("myPieChart"),{
 	type: 'pie',
 	data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: labelData,
         datasets: [{
             label: 'My First dataset',
             
-            backgroundColor: ["#97EAD2","#8CC7A1","#816E94","#74226C","#4B2142","#8CACB3","#878DA4"],
-            borderColor: '#4B2142',
-            data: [0, 10, 5, 2, 20, 30, 45]
+            backgroundColor: ["#355070","#B56576","#EAAC8B","#74226C","#4B2142","#8CACB3","#878DA4"],
+           // borderColor: '#FFFFFF',
+            data: numericData
         }]
     },
 
-    options: {}
+    options: {
+    	title:{
+    		display : true,
+    		text : 'project statuses'
+    	}
+    	
+    }
 });
+//[{"value":1,"label":"COMPLETED"},{"value":2,"label":"INPROGRESS"},{"value":1,"label":"NOTSTARTED"}]
+function decodeHTML(html){
+	var txt = document.createElement("textarea");
+	txt.innerHTML = html;
+	return txt.value;
+}
