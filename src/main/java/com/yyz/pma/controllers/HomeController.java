@@ -5,48 +5,54 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yyz.pma.dao.EmployeeRepository;
-import com.yyz.pma.dao.ProjectRepository;
 import com.yyz.pma.dto.ChartData;
 import com.yyz.pma.dto.EmployeeProject;
-import com.yyz.pma.entities.Employee;
 import com.yyz.pma.entities.Project;
-
-
+import com.yyz.pma.services.EmployeeService;
+import com.yyz.pma.services.ProjectService;
 
 @Controller
 public class HomeController {
-	@Autowired
-	ProjectRepository proRepo;
+	
+	@Value("${version}")
+	private String ver;
 	
 	@Autowired
-	EmployeeRepository empRepo;
+	ProjectService proService;
 	
+	@Autowired
+	EmployeeService empService;
+
 	@GetMapping("/")
 	public String displayHome(Model model) throws JsonProcessingException {
-		List<Project> projectList = proRepo.findAll();
-		model.addAttribute("projectList",projectList);
 		
+		model.addAttribute("versionNumber", ver);
+		// we are querying the database for projects
+		List<Project> projects = proService.getAll();
+		model.addAttribute("projectsList", projects);
 		
-		List<EmployeeProject> employeeProjectCnt = empRepo.employeeProjects();
-		model.addAttribute("employeeListCount", employeeProjectCnt);
+		List<ChartData> projectData = proService.getProjectStatus();
 		
-		
-		Map<String, Object> map = new HashMap<>();
-		
-		List<ChartData> projectData = proRepo.getProjectStatus();
-		//convert projectData object into a json structure
+		// Lets convert projectData object into a json structure for use in javascript
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(projectData);
-		//[{"value":1,"label":"COMPLETED"},{"value":2,"label":"INPROGRESS"},{"value":1,"label":"NOTSTARTED"}]
+		// [["NOTSTARTED", 1], ["INPROGRESS", 2], ["COMPLETED", 1]]
+		
 		model.addAttribute("projectStatusCnt", jsonString);
 		
+		// we are querying the database for employees
+		List<EmployeeProject> employeesProjectCnt = empService.employeeProjects();
+		model.addAttribute("employeesListProjectsCnt", employeesProjectCnt);
+		
+		
 		return "main/home";
+		
 	}
 }

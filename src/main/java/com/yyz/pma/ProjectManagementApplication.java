@@ -7,17 +7,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.yyz.pma.dao.EmployeeRepository;
 import com.yyz.pma.dao.ProjectRepository;
 
-
 @SpringBootApplication
 public class ProjectManagementApplication {
 
-	
 	@Autowired
 	EmployeeRepository empRepo;
-	
+
 	@Autowired
 	ProjectRepository projRepo;
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectManagementApplication.class, args);
 	}

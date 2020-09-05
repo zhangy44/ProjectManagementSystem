@@ -7,7 +7,7 @@
 <body>
 
 	<nav th:replace="layouts::navbar"></nav>
-
+	<h5 th:text="${versionNumber}" class="font-italic"></h5>
 	<div class="container">
 		<h3>Main Dashboard</h3>
 		<hr>
@@ -23,7 +23,7 @@
 						</tr>
 					<thead>
 						<!-- <th scope="row"></th> -->
-						<tr th:each="proj : ${projectList}">
+						<tr th:each="proj : ${projectsList}">
 							<td th:text="${proj.name}" />
 							<td th:text="${proj.stage}" />
 						</tr>
@@ -54,7 +54,7 @@
 						</tr>
 					<thead>
 						<!-- <th scope="row"></th> -->
-						<tr th:each="empCount : ${employeeListCount}">
+						<tr th:each="empCount : ${employeesListProjectsCnt}">
 							<td th:text="${empCount.firstName}" />
 							<td th:text="${empCount.lastName}" />
 							<td th:text="${empCount.projectCount}" />
