@@ -27,7 +27,7 @@
 				<option th:each="emp:${allEmployees}" th:value="${emp.employeeId}"
 					th:text="${emp.firstName}">
 			</select>
-
+				<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 			<button type="submit">Create Project</button>
 
 		</form>
