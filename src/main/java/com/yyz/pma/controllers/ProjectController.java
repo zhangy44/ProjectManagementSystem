@@ -1,6 +1,8 @@
 package com.yyz.pma.controllers;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,5 +55,33 @@ public class ProjectController {
 		// use a redirect to prevent duplicate submissions
 		return "redirect:/projects ";
 		
+	}
+	
+	@GetMapping("/update")
+	public String displayEmployeeUpdateForm(@RequestParam("id") long theId,  Model model) {
+		
+		Project theProj = proService.findByProjectId(theId);
+		
+		List<Employee> selectedEmp = theProj.getEmployees();
+		
+		Set<Long> selectedEmpId = new HashSet<>();
+		for(Employee emp : selectedEmp) {
+			selectedEmpId.add(emp.getEmployeeId());
+		}
+		Iterable<Employee> employees = empService.getAll();
+		
+		model.addAttribute("project", theProj);
+		model.addAttribute("allEmployees", employees);
+		model.addAttribute("selectedEmpId", selectedEmpId);
+		
+		
+		return "projects/new-project";
+	}
+	
+	@GetMapping("/delete")
+	public String deleteEmployee(@RequestParam("id") long theId, Model model) {
+		Project theProj = proService.findByProjectId(theId);
+		proService.delete(theProj);
+		return "redirect:/projects";
 	}
 }

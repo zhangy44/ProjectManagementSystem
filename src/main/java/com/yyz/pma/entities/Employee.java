@@ -3,6 +3,7 @@ package com.yyz.pma.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yyz.pma.validators.UniqueValue;
+
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -19,10 +27,22 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
 	@SequenceGenerator(name = "employee_seq", sequenceName = "employee_seq", allocationSize = 1)
 	private long employeeId;
+	
+	
+	@NotBlank(message="*Must give a first name")
+	@Size(min=2, max=50)
 	private String firstName;
+	
+	@NotBlank(message="*Must give a last name")
+	@Size(min=1, max=50)
 	private String lastName;
+	
+	@NotBlank
+	@Email(message="*Must be a valid email address")
+	@UniqueValue
 	private String email;
 
+	@JsonIgnore
 	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
 			CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))

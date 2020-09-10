@@ -42,17 +42,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
-			.antMatchers("/projects/new").hasRole("ADMIN")
-			.antMatchers("/projects/save").hasRole("ADMIN")
-			.antMatchers("/employees/new").hasRole("ADMIN")
-			.antMatchers("/employees/save").hasRole("ADMIN")
+//			.antMatchers("/projects/new").hasRole("ADMIN")
+//			.antMatchers("/projects/save").hasRole("ADMIN")
+//			.antMatchers("/employees/new").hasRole("ADMIN")
+//			.antMatchers("/employees/save").hasRole("ADMIN")
 			.antMatchers("/", "/**").permitAll()
 			.and()
 			.formLogin();
 		//   .loginPage("login-page")
 		//then need a controller to control the login-page.html
 		
-		//http.csrf().disable();
+		http.csrf().disable();
 		
 	}
 }

@@ -29,4 +29,14 @@ public class ProjectService {
 //	public List<TimeChartData> getTimeData(){
 //		return proRepo.getTimeData();
 //	}
+
+	public Project findByProjectId(long id) {
+		// TODO Auto-generated method stub
+		return proRepo.findById(id);
+	}
+
+	public void delete(Project theProj) {
+		// TODO Auto-generated method stub
+		proRepo.delete(theProj);
+	}
 }
